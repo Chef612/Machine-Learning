@@ -1,0 +1,58 @@
+**Getting an eye up there : Surveillance drone using OpenCV and Python**
+By:
+Souvik Banerjee
+B.tech(IT) School of Computer Engineering - KIIT University 
+
+With the increased sophistication of organized criminal activities the law enforcement agencies are having a hard time keeping up. Fortunately, since their inception Drones(Unmanned Aerial Vehicles) have proven to be a vital technology in security and surveillance. These drones may be used for monitoring events, conduct domestic surveillance and hover on preset routes. Machine Learning plays a vital role in the design and development of such high utility drones. There is a bright future in incorporating ML in security and surveillance but this a journey that will take time. This article deals in particular with the role of Machine Learning in drone technology. We will discuss the basic architecture and the hardware requirements related to the design of a UAV following that will be the Machine learning approach to this technology which includes computer vision and object tracking in detail. To conclude the discussion we will discuss the future aspects related to this evolving technology.
+
+Drone Architecture :
+In general a surveillance UAV/drone architecture is made up of three elementary units.
+1.The unmanned aircraft
+2.Ground control system
+3.Data-Link
+The aircraft: The key components in order to facilitate computer vision in a UAV are the mounted camera and the on-board data storage facility.
+Ground control system: This is the on-land facility which provide the operators the necessary capabilities to monitor the drone’s activities and gather the data during their operations.
+Data-Link: This enables the wireless flow of information from the aircraft to the Ground unit and is dependent on the drones’ operational range.
+Drone to ground station communication:
+This communication type is based on the already known and standardized industrial protocols, which are based on wireless communications such as Bluetooth and Wi-Fi including 2.4 GHz and 5 GHz bandwidths.
+
+Hardware standards and requirements :
+There are a number of requirements that need to be fulfilled while selecting the correct UAV, like:
+1.suitable for outdoor flight.
+2.Hover ability
+3.On-board camera
+4.Communication channel capable of video transmission
+All this needs to be done keeping the cost in mind.
+Apart from the UAV there are other essential hardware components.A computer is required capable of processing the video stream and sending commands to the UAV. Here we will use the Parrot AR Drone 2.0 capable of carrying a mounted camera.
+
+Parrot A.R Drone 2.0 :
+It is a light and cost effective aerial vehicle.Communication is via Wi-fi access point created by the drone, and the mounted camera captures frames at approximately 30fps.The API supports python .On-board processing, for functions such as stabilization, is provided by a 32 bit ARM Cortex A8 processor running at 1 GHz.Also, in-spite of being relatively small the AR drone 2.0 is equipped with a full array of flight sensors like accelerometer ,gyroscope and a magnetometer. Hence it proves to be an apt choice for the purpose.
+
+Machine Learning Approach :
+The Library : OpenCV
+OpenCV is a highly optimized library with focus on real-time applications. It was built to provide a common infrastructure for computer vision applications and to accelerate the use of machine perception in the commercial products. In simple words it gives the computer the ability to see and detect objects of interest that have been fed into it by the developer.
+
+Computer Vision and Object detection :
+Computer vision is the study of analyzing, processing, and understanding images from the real world in a quantifiable manner in order to produce numerical or symbolic information. Operation of the UAV in this case is done by the drone camera detecting objects and recognizing as per the trained model and following them.
+But there are numerous obstacles in achieving this. Here the most important factor becomes color.The algorithm searches for a particular color say red. As soon as the object is acquired,the drone tracks it as long as it is in view . Although this method causes various problems but as we move to a restricted environment it does not remain very problematic.
+There could be several other methods for object detection and identification but here we use a blob detection technique. The on-board camera captures images at a specified speed in frames per second .Every image in converted to grayscale by removing the pixels that do not match the pre-mentioned color that we intend to track or are not within the threshold value given in the code. 
+This gives us the monochrome image and only the required contour is displayed in white and hence we know exactly what our target is.
+Tracking the object depends on how big/small it appears in the frame.This can be used to determine relative distance to the object. If the object appears smaller, the UAV is farther away; larger indicates that the UAV is closer.
+The computer vision heavy lifting is performed by OpenCV, the earlier mentioned open source, widely used computer vision library. It provides C++, Python, and Java APIs on all major desktop and mobile operating systems. Here we have used the python library.
+
+Depth analysis :
+As soon as the blob of the required color is in the camera frame, OpenCV detects it. Once detected, we are able to request its apparent area in pixels. This area is stored in real time and serves as a baseline for later comparison. In the upcoming images, the current apparent area of the target is determined. If this area is greater than the baseline, the vehicle is closer to the target than it was initially. If smaller, the vehicle is farther from the target. This determines whether the aircraft is moving towards the target or away from it.
+Though this system is very effective it is not perfect. It does not give the exact distance between the target and the vehicle and also does not provide us the rate of change of the distance i.e the speed of the UAV.
+
+Enhancing Target detection :
+In the previously mentioned process the vision software detects a target and then the drone moves towards it until it reaches a specified distance and then enters hover mode where it waits for the target to move further as to follow it again. But then arises the problem of detecting false positive targets hence causing ambiguity to the software.There are cases when the software detects an extremely small object of the similar color. This problem reduces the accuracy of the algorithm . In order to solve this problem a parameter is be added that for an object to be detected as a target the size must be more than a specified threshold value.Thus we can ensure the absence of relatively small contours of the same color to be detected.Even after taking all the precautions no the method can be fully accurate, hence the Ground control can override the drone settings at any instance when the drone detects a false target and starts following hence acting as a backup plan which always comes in handy.
+
+Future Aspects :
+Unmanned Aerial Vehicles will continue to be applied in various law enforcement operations due to their high convenience in reducing losses and enabling the execution of high profile and time-sensitive missions.The next generation of drones, Generation 7, is already underway as 3DRobotics announced the world’s first all in one Smart drone called SOLO .Smart drones with built-in safeguards and compliance tech, smart accurate sensors, and self monitoring are the next big revolution in drone technology. Along with enhancement is required better regulations for the use of drones in order to prevent misuse of technology hence strict DGCA regulations are always kept up to date.As once said with great power comes great responsibility.
+
+References :
+1.Innovative Drone Research by Prof. Simon D. Levy.
+2.Real-time drone object tracking by Christian S.Perone.
+3.Robotics in law enforcement by Emily Andrews.
+4.Security analysis of drone systems by Ola Salman, NCBI USA.
+5.The Drones report by Business Insider Intelligence.
